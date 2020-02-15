@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class JavaApplication1 {
 
     public static void main(String[] args) {
-
+        String prueba = "ok";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String _url = "jdbc:mysql: //localhost/tienda?user=root&password=mysqladmin";
