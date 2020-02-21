@@ -1,5 +1,6 @@
 package javaapplication1;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -29,7 +30,7 @@ public class JavaApplication1 {
             }
 
             Scanner scan = new Scanner(System.in);
-            System.out.println("¿Qué deseas hacer: Insertar / Borrar / Consultar");
+            System.out.println("¿Qué deseas hacer: Insertar / Borrar/ Actualizar / Consultar");
             String accion = scan.nextLine();
 
             if (accion.equals("Insertar")) {
@@ -68,17 +69,22 @@ public class JavaApplication1 {
                 System.out.println("Ingresa el desc_producto");
                 String descProd = scan.nextLine();
 
-                scan = new Scanner(System.in);
-                System.out.println("Ingresa el precio");
-                String precio = scan.nextLine();
+                
 
-                _query = "Update producto set desc_producto = ?,  precio= ? where id_producto=?";
-                PreparedStatement ps = connect.prepareStatement(_query);
-                ps.setString(1, descProd);
-                ps.setInt(2, Integer.parseInt(precio));
-                ps.setInt(3, Integer.parseInt(idProd));
-                ps.executeUpdate();
-
+                scan= new Scanner(System.in);
+                System.err.println("1 Ingresa el precio");
+                  int precio = scan.nextInt();
+                _query= "{call Insert_producto(?, ?)}";
+                CallableStatement stmt = connect.prepareCall(_query);
+                stmt.setString(1, descProd);
+                stmt.setInt(2, precio);
+                stmt.execute();
+                //               _query = "Update producto set desc_producto = ?,  precio= ? where id_producto=?";
+                //             PreparedStatement ps = connect.prepareStatement(_query);
+                //           ps.setString(1, descProd);
+                //         ps.setInt(2, Integer.parseInt(precio));
+                //       ps.setInt(3, Integer.parseInt(idProd));
+                //     ps.executeUpdate();
                 resultSet.close();
                 statement.close();
                 connect.close();
